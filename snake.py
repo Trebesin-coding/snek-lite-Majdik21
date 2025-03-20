@@ -20,6 +20,7 @@ player_score = 0
 
 
 coinr_surf = pg.image.load('img/coinr.png').convert_alpha()
+coinr_surf = pg.transform.rotozoom(coinr_surf, 0, 1.5)
 coinr_x = random.randint(0, screen_width)
 coinr_y = random.randint(0, screen_height)
 coinr_rect = coinr_surf.get_rect(midbottom=(coinr_x,coinr_y))
@@ -44,15 +45,19 @@ while running:
         player_rect.bottom += player_speed
 
     
-    screen.fill('white')
+    screen.fill('black')
 
     score = font.render(f'score: {player_score}', False, '#ffffff')
 
     screen.blit(player_surf, (player_rect))
     screen.blit(coinr_surf, (coinr_rect))
+    screen.blit(score, (screen_width - 80, 30))
 
     if player_rect.colliderect(coinr_rect):
         player_score += 1
         coinr_x = random.randint(0, screen_width)
         coinr_y = random.randint(0, screen_height)
         coinr_rect = coinr_surf.get_rect(midbottom=(coinr_x,coinr_y))
+
+    pg.display.update()
+    clock.tick(60)
